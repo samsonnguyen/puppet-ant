@@ -3,11 +3,15 @@
 # Examples
 #
 #   include homebrew::repo
-class homebrew::repo {
+class homebrew::repo (
+  $installdir   = $homebrew::config::installdir,
+  $min_revision = $homebrew::config::min_revision,
+) {
   require homebrew
 
-  exec { 'brew update':
-    require => Class['git'],
-    creates => "${homebrew::config::installdir}/.git"
+  if $::osfamily == 'Darwin' {
+    homebrew_repo { $installdir:
+      min_revision => $min_revision,
+    } -> Package <| |>
   }
 }

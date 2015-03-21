@@ -5,7 +5,7 @@
 #   require homebrew::config
 
 class homebrew::config {
-  require boxen::config
+  include boxen::config
 
   $cachedir   = "${boxen::config::cachedir}/homebrew"
   $installdir = "${boxen::config::home}/homebrew"
@@ -16,5 +16,5 @@ class homebrew::config {
 
   $brewsdir   = "${tapsdir}/boxen-brews"
 
-  anchor { [$cachedir, $cmddir, $installdir, $tapsdir, $brewsdir]: }
+  $min_revision = 'e07584e3fbdc88327bafe23b9c40c904d0fff0a1'
 }
