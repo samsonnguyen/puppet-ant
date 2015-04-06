@@ -1,12 +1,20 @@
-class ant {
+class ant($version       = undef,
+          $homebrew_root = undef) {
   include homebrew
+  
+  validate_string($version,
+                  $homebrew_root)
+
   ensure_resource('homebrew::tap','homebrew/versions', {
     'ensure' => 'present' }
   )
-  #homebrew::tap { 'homebrew/versions': }
 
-  package {
-    'ant' :
-      ensure => '1.9.4';
-  } 
+  package { 'ant' :
+    ensure => $version;
+  }
+
+  file { "${homebrew_root}/Cellar/ant/${version}/lib":
+    ensure => link,
+    target => "${homebrew_root}/Cellar/ant/${version}/libexec/lib"
+  }
 }
