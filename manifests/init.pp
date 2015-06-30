@@ -14,7 +14,8 @@ class ant($version       = undef,
   }
 
   file { "${homebrew_root}/Cellar/ant/${version}/lib":
-    ensure => link,
-    target => "${homebrew_root}/Cellar/ant/${version}/libexec/lib"
+    ensure  => link,
+    target  => "${homebrew_root}/Cellar/ant/${version}/libexec/lib",
+    require => Package['ant'],
   }
 }
